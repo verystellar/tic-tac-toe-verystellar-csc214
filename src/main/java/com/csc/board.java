@@ -8,48 +8,15 @@ public class board {
     String input = "";
     int playerCount = 0;
     Boolean status = false;
+
     int[] indexes(String input){
         int[] idx = new int[2];
-        switch (input){
-            case "1":
-                idx[0] = 0;
-                idx[1] = 0;
-                break;
-            case "2":
-                idx[0] = 0;
-                idx[1] = 1;
-                break;
-            case "3":
-                idx[0] = 0;
-                idx[1] = 2;
-                break;
-            case "4":
-                idx[0] = 1;
-                idx[1] = 0;
-                break;
-            case "5":
-                idx[0] = 1;
-                idx[1] = 1;
-                break;
-            case "6":
-                idx[0] = 1;
-                idx[1] = 2;
-                break;
-            case "7":
-                idx[0] = 2;
-                idx[1] = 0;
-                break;
-            case "8":
-                idx[0] = 2;
-                idx[1] = 1;
-                break;
-            case "9":
-                idx[0] = 2;
-                idx[1] = 2;
-                break;
-        }
+        int val =  Integer.parseInt(input) - 1;
+        idx[0] = val/3;
+        idx[1] = val%3;
         return idx;
     }
+
     void displayBoard(){
         String row1 = positions[0][0] + " | " + positions[0][1] + " | " + positions[0][2];
         String row2 = positions[1][0] + " | " + positions[1][1] + " | " + positions[1][2];
