@@ -9,6 +9,11 @@ public class board {
     String input = "";
     int playerCount = 0;
     Boolean status = false;
+    char p1 = 'x';
+    char p2 = 'o';
+    String p1win = "xxx";
+    String p2win = "ooo";
+
 
     int[] indexes(String input) {
         int[] idx = new int[2];
@@ -39,7 +44,7 @@ public class board {
     Boolean isValidPosition(int[] pos) {
         int pos1 = pos[0];
         int pos2 = pos[1];
-        if (positions[pos1][pos2] == 'x' || positions[pos1][pos2] == 'o') {
+        if (positions[pos1][pos2] == p1 || positions[pos1][pos2] == p2) {
             return false;
         }
 
@@ -65,16 +70,16 @@ public class board {
             System.out.println("That move is invalid!");
         }
         if (playerCount % 2 == 0) {
-            positions[pos1][pos2] = 'x';
+            positions[pos1][pos2] = p1;
         } else {
-            positions[pos1][pos2] = 'o';
+            positions[pos1][pos2] = p2;
         }
     }
 
     public void botSetPosition(int[] pos) {
         int pos1 = pos[0];
         int pos2 = pos[1];
-        positions[pos1][pos2] = 'o';
+        positions[pos1][pos2] = p2;
     }
 
     String whichPlayer() {
@@ -97,7 +102,7 @@ public class board {
             for (int j = 0; j <= 2; j++) {
                 s += positions[i][j];
             }
-            if (s.equals("xxx") || s.equals("ooo")) {
+            if (s.equals(p1win) || s.equals(p2win)) {
                 return true;
             }
         }
@@ -106,7 +111,7 @@ public class board {
             for (int j = 0; j <= 2; j++) {
                 s += positions[j][i];
             }
-            if (s.equals("xxx") || s.equals("ooo")) {
+            if (s.equals(p1win) || s.equals(p2win)) {
                 return true;
             }
         }
@@ -204,10 +209,45 @@ public class board {
 
         }
     }
+    void changeSymbol(){
+        System.out.println("Please enter a symbol for player 1: ");
+        boolean goodAnswer = false;
+        while(!goodAnswer){
+            String answer = sc.nextLine();
+            if(answer.length()>1 || answer.length() == 0){
+                System.out.println("Invalid input\n");
+                continue;
+            }
+            if(answer.charAt(0) == ' ' || answer.charAt(0) == '\t'){
+                System.out.println("Invalid input\n");
+                continue;
+            }
+            p1 = answer.charAt(0);
+            goodAnswer = true;
+        }
+        goodAnswer = false;
+        System.out.println("Please enter a symbol for player 2: ");
+        while(!goodAnswer){
+            String answer = sc.nextLine();
+            if(answer.length()>1 || answer.length() == 0){
+                System.out.println("Invalid input\n");
+                continue;
+            }
+            if(answer.charAt(0) == ' ' || answer.charAt(0) == '\t'){
+                System.out.println("Invalid input\n");
+                continue;
+            }
+            p2 = answer.charAt(0);
+            goodAnswer = true;
+        }
+        p1win = String.valueOf(p1).repeat(3);
+        p2win = String.valueOf(p2).repeat(3);
 
+    }
 
     int menu() {
-        System.out.println("Welcome to Tic-Tac-Toe!\nEnter 1 to enter a PvP game or 2 to play against a computer\n");
+        System.out.println("Welcome to Tic-Tac-Toe!\nEnter 1 to enter a PvP game, 2 to play against a computer, or 3 to " +
+                "customize player symbols\n");
         Boolean goodGame = false;
         int gameAnswerInt = 0;
         while (!goodGame) {
@@ -219,8 +259,15 @@ public class board {
                 continue;
             }
             int tempGameAnswerInt = Integer.parseInt(gameAnswer);
-            if (tempGameAnswerInt < 1 || tempGameAnswerInt > 2) {
+            if (tempGameAnswerInt < 1 || tempGameAnswerInt > 3) {
                 System.out.println("Invalid input\n");
+                continue;
+            }
+            if (tempGameAnswerInt == 3) {
+                changeSymbol();
+                System.out.println("Done!");
+                System.out.println("Enter 1 to enter a PvP game, 2 to play against a computer, or 3 to " +
+                        "customize player symbols\n");
                 continue;
             }
             gameAnswerInt = tempGameAnswerInt;
